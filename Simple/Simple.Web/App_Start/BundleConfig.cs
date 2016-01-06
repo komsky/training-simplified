@@ -26,6 +26,11 @@ namespace Simple.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/global").Include(
+            "~/Scripts/global.js",
+            "~/Scripts/init.js"));
+
         }
     }
 }

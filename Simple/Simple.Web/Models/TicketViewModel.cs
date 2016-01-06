@@ -16,23 +16,18 @@ namespace Simple.Web.Models
         public Int32 Id { get; set; }
         public String Title { get; set; }
         public String Description { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Ticket Priority")]
+        [DisplayName("Ticket Priority")]
         public TicketPriority TicketPriority { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Ticket State")]
+        [DisplayName("Ticket State")]
         public TicketState TicketState { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Product")]
+        [DisplayName("Product")]
         public int? ProductId { get; set; }
         public ProductViewModel Product { get; set; }
         public String AgentReply { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Owner")]
+        [DisplayName("Owner")]
         public String OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Agent")]
+        [DisplayName("Agent")]
         public String AssignedAgentId { get; set; }
         public ApplicationUser AssignedAgent { get; set; }
     }

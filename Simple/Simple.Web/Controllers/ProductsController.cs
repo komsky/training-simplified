@@ -13,7 +13,7 @@ using Simple.Web.Models;
 
 namespace Simple.Web.Controllers
 {
-    public class ProductsController : Controller
+    public partial class ProductsController : Controller
     {
         //private ApplicationDbContext _db = new ApplicationDbContext();
         private readonly ISimpleDbContext _db;
@@ -23,14 +23,14 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Products
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             var products = _db.Products.Include(p => p.Customer).Select(ProductFactories.CreateProductViewModel);
             return View(products);
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int? id)
+        public virtual ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -45,7 +45,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Products/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             ViewBag.CustomerId = new SelectList(_db.Customers, "Id", "Name");
             return View();
@@ -56,7 +56,7 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
+        public virtual ActionResult Create([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Products/Edit/5
-        public ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -90,7 +90,7 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
+        public virtual ActionResult Edit([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -120,7 +120,7 @@ namespace Simple.Web.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             Product product = _db.Products.Find(id);
             _db.Products.Remove(product);

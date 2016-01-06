@@ -1,6 +1,7 @@
 ﻿using Simple.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,9 @@ namespace Simple.Web.Models
         public String Name { get; set; }
         public String Color { get; set; }
         public decimal Price { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Date Added")]
+        [DisplayName("Date Added")]
         public DateTime DateAdded { get; set; }
-        //TODO: 02 Change display name
-        //[DisplayName("Customer")]
+        [DisplayName("Customer")]
         public int CustomerId { get; set; }
         public CustomerViewModel Customer { get; set; }
     }

@@ -13,7 +13,7 @@ using Simple.Web.Models.Factories;
 
 namespace Simple.Web.Controllers
 {
-    public class CustomersController : Controller
+    public partial class CustomersController : Controller
     {
         //I've replaced classic ApplicationDbContext with Dependency interface
         //for Ninject binding
@@ -25,13 +25,13 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View(_db.Customers.Select(CustomerFactories.CreateCustomerViewModel));
         }
 
         // GET: Customers/Details/5
-        public ActionResult Details(int? id)
+        public virtual ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -46,7 +46,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Customers/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
@@ -56,7 +56,7 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,Address")] CustomerViewModel customer)
+        public virtual ActionResult Create([Bind(Include = "Id,Name,Email,Address")] CustomerViewModel customer)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -88,11 +88,11 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,Address")] CustomerViewModel customer)
+        public virtual ActionResult Edit([Bind(Include = "Id,Name,Email,Address")] CustomerViewModel customer)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(customer).State = EntityState.Modified;
+                _db.Entry(customer.ToCustomer()).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -100,7 +100,7 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Customers/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -117,7 +117,7 @@ namespace Simple.Web.Controllers
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             Customer customer = _db.Customers.Find(id);
             _db.Customers.Remove(customer);

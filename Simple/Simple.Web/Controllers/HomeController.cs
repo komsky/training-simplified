@@ -7,26 +7,26 @@ using System.Web.Mvc;
 
 namespace Simple.Web.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
 
         private readonly ISimpleDbContext _db;
         public HomeController(ISimpleDbContext db)
         { _db = db; }
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             ViewBag.NumberOfTickets = _db.Tickets.Count();
             return View();
         }
 
-        public ActionResult About()
+        public virtual ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public virtual ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 

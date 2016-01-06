@@ -16,7 +16,7 @@ using Simple.Web.Models.Factories;
 namespace Simple.Web.Controllers
 {
     [Authorize] //Tylko się upewniam, że jesteście zalogowani
-    public class TicketsController : Controller
+    public partial class TicketsController : Controller
     {
         //private ApplicationDbContext _db = new ApplicationDbContext();
         private readonly ISimpleDbContext _db;
@@ -26,14 +26,14 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Tickets
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             var tickets = _db.Tickets.Include(t => t.AssignedAgent).Include(t => t.Owner).Include(t => t.Product).Select(Mapper.DynamicMap<TicketViewModel>);
             return View(tickets);
         }
 
         // GET: Tickets/Details/5
-        public ActionResult Details(int? id)
+        public virtual ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -48,10 +48,9 @@ namespace Simple.Web.Controllers
         }
 
         // GET: Tickets/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
-            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View();
         }
 
@@ -60,25 +59,23 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TicketViewModel ticket)
+        public virtual ActionResult Create(TicketViewModel ticket)
         {
             if (ModelState.IsValid)
             {
-                
-                //TODO: 02 - TicketViewModel should have owner:
-                //ticket.OwnerId = User.Identity.GetUserId();
+
+                ticket.OwnerId = User.Identity.GetUserId();
                 _db.Tickets.Add(ticket.ToTicket());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
         // GET: Tickets/Edit/5
-        public ActionResult Edit(int? id)
+        public virtual ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -89,8 +86,7 @@ namespace Simple.Web.Controllers
             {
                 return HttpNotFound();
             }
-            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -99,7 +95,7 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TicketViewModel ticket)
+        public virtual ActionResult Edit(TicketViewModel ticket)
         {
             if (ModelState.IsValid)
             {
@@ -108,13 +104,13 @@ namespace Simple.Web.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
         // GET: Tickets/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -131,7 +127,7 @@ namespace Simple.Web.Controllers
         // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             Ticket ticket = _db.Tickets.Find(id);
             _db.Tickets.Remove(ticket);
