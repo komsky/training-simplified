@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>mod04_globaljs</Title>
+      <Author>Adrian Ilewicz</Author>
+      <Description />
+      <HelpUrl />
+      <SnippetTypes />
+      <Keywords />
+      <Shortcut />
+    </Header>
+    <Snippet>
+      <References />
+      <Imports />
+      <Declarations />
+      <Code Language="jscript" Kind="" Delimiter="$"><![CDATA[var GLOBAL = GLOBAL || {};
+
+GLOBAL.Search = GLOBAL.Search ||
+{
+    Search: function() {
+        console.log('Search');
+    },
+    Init: function() {
+        console.log('Search init');
+    }
+}]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

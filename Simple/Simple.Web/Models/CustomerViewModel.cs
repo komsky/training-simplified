@@ -14,6 +14,6 @@ namespace Simple.Web.Models
         public String Email { get; set; }
         public String Address { get; set; }
 
-        public ICollection<ApplicationUser> Users { get; set; }
+        public IEnumerable<ApplicationUser> Users { get; set; }
     }
 }

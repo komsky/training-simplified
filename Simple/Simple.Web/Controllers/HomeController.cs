@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simple.DAL.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,13 @@ namespace Simple.Web.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly ISimpleDbContext _db;
+        public HomeController(ISimpleDbContext db)
+        { _db = db; }
         public ActionResult Index()
         {
+            ViewBag.NumberOfTickets = _db.Tickets.Count();
             return View();
         }
 

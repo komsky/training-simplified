@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Simple.DAL.Entities.Ticket>
+﻿@model IEnumerable<Simple.Web.Models.TicketViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,9 +12,11 @@
 <table class="table">
     <tr>
         <th>
+            @*TODO: 03 Zmień tekst poniżej na statyczną nazwę: Agent*@
             @Html.DisplayNameFor(model => model.AssignedAgent.Email)
         </th>
         <th>
+            @*TODO: 03 Zmień tekst poniżej na statyczną nazwę: Owner*@
             @Html.DisplayNameFor(model => model.Owner.Email)
         </th>
         <th>

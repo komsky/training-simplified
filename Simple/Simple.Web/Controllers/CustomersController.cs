@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Simple.DAL.Context;
 using Simple.DAL.Entities;
 using Simple.Web.Models;
+using Simple.Web.Models.Factories;
 
 namespace Simple.Web.Controllers
 {
@@ -26,7 +27,7 @@ namespace Simple.Web.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(_db.Customers.ToList());
+            return View(_db.Customers.Select(CustomerFactories.CreateCustomerViewModel));
         }
 
         // GET: Customers/Details/5
@@ -36,7 +37,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customer = _db.Customers.Find(id);
+            CustomerViewModel customer = _db.Customers.Find(id).ToCustomerViewModel();
             if (customer == null)
             {
                 return HttpNotFound();
@@ -59,7 +60,7 @@ namespace Simple.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Customers.Add(customer);
+                _db.Customers.Add(customer.ToCustomer());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -74,7 +75,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customer = _db.Customers.Find(id);
+            CustomerViewModel customer = _db.Customers.Find(id).ToCustomerViewModel();
             if (customer == null)
             {
                 return HttpNotFound();
@@ -105,7 +106,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerViewModel customer = _db.Customers.Find(id);
+            CustomerViewModel customer = _db.Customers.Find(id).ToCustomerViewModel();
             if (customer == null)
             {
                 return HttpNotFound();
@@ -118,7 +119,7 @@ namespace Simple.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CustomerViewModel customer = _db.Customers.Find(id);
+            Customer customer = _db.Customers.Find(id);
             _db.Customers.Remove(customer);
             _db.SaveChanges();
             return RedirectToAction("Index");

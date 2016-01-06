@@ -14,8 +14,11 @@ namespace Simple.Web.Models
         public String Name { get; set; }
         public String Color { get; set; }
         public decimal Price { get; set; }
+        //TODO: 02 Change display name
+        //[DisplayName("Date Added")]
         public DateTime DateAdded { get; set; }
-        [ForeignKey("Customer")]
+        //TODO: 02 Change display name
+        //[DisplayName("Customer")]
         public int CustomerId { get; set; }
         public CustomerViewModel Customer { get; set; }
     }

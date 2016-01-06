@@ -2,6 +2,8 @@
 using Simple.DAL.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,16 +16,23 @@ namespace Simple.Web.Models
         public Int32 Id { get; set; }
         public String Title { get; set; }
         public String Description { get; set; }
+        //TODO: 02 Change display name
+        //[DisplayName("Ticket Priority")]
         public TicketPriority TicketPriority { get; set; }
+        //TODO: 02 Change display name
+        //[DisplayName("Ticket State")]
         public TicketState TicketState { get; set; }
-        [ForeignKey("Product")]
+        //TODO: 02 Change display name
+        //[DisplayName("Product")]
         public int? ProductId { get; set; }
         public ProductViewModel Product { get; set; }
         public String AgentReply { get; set; }
-        [ForeignKey("Owner")]
+        //TODO: 02 Change display name
+        //[DisplayName("Owner")]
         public String OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
-        [ForeignKey("AssignedAgent")]
+        //TODO: 02 Change display name
+        //[DisplayName("Agent")]
         public String AssignedAgentId { get; set; }
         public ApplicationUser AssignedAgent { get; set; }
     }

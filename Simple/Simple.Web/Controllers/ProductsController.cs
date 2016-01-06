@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Simple.DAL.Context;
 using Simple.DAL.Entities;
+using Simple.Web.Models.Factories;
+using Simple.Web.Models;
 
 namespace Simple.Web.Controllers
 {
@@ -23,8 +25,8 @@ namespace Simple.Web.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var products = _db.Products.Include(p => p.Customer);
-            return View(products.ToList());
+            var products = _db.Products.Include(p => p.Customer).Select(ProductFactories.CreateProductViewModel);
+            return View(products);
         }
 
         // GET: Products/Details/5
@@ -34,7 +36,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = _db.Products.Find(id);
+            ProductViewModel product = _db.Products.Find(id).ToProductViewModel();
             if (product == null)
             {
                 return HttpNotFound();
@@ -54,11 +56,11 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] Product product)
+        public ActionResult Create([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
-                _db.Products.Add(product);
+                _db.Products.Add(product.ToProduct());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -74,7 +76,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = _db.Products.Find(id);
+            ProductViewModel product = _db.Products.Find(id).ToProductViewModel();
             if (product == null)
             {
                 return HttpNotFound();
@@ -88,11 +90,11 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] Product product)
+        public ActionResult Edit([Bind(Include = "Id,Name,Color,Price,DateAdded,CustomerId")] ProductViewModel product)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(product).State = EntityState.Modified;
+                _db.Entry(product.ToProduct()).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -107,7 +109,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = _db.Products.Find(id);
+            ProductViewModel product = _db.Products.Find(id).ToProductViewModel();
             if (product == null)
             {
                 return HttpNotFound();

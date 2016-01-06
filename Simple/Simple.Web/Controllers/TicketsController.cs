@@ -9,10 +9,13 @@ using System.Web.Mvc;
 using Simple.DAL.Context;
 using Simple.DAL.Entities;
 using Simple.Web.Models;
+using Microsoft.AspNet.Identity;
 using AutoMapper;
+using Simple.Web.Models.Factories;
 
 namespace Simple.Web.Controllers
 {
+    [Authorize] //Tylko się upewniam, że jesteście zalogowani
     public class TicketsController : Controller
     {
         //private ApplicationDbContext _db = new ApplicationDbContext();
@@ -26,7 +29,7 @@ namespace Simple.Web.Controllers
         public ActionResult Index()
         {
             var tickets = _db.Tickets.Include(t => t.AssignedAgent).Include(t => t.Owner).Include(t => t.Product).Select(Mapper.DynamicMap<TicketViewModel>);
-            return View(tickets.ToList());
+            return View(tickets);
         }
 
         // GET: Tickets/Details/5
@@ -36,7 +39,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = _db.Tickets.Find(id);
+            TicketViewModel ticket = _db.Tickets.Find(id).ToTicketViewModel();
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -47,10 +50,8 @@ namespace Simple.Web.Controllers
         // GET: Tickets/Create
         public ActionResult Create()
         {
-            //TODO: Replace with ViewModel and UserManager
-            //ViewBag.AssignedAgentId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.OwnerId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View();
         }
 
@@ -59,19 +60,20 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,TicketPriority,TicketState,ProductId,AgentReply,OwnerId,AssignedAgentId")] Ticket ticket)
+        public ActionResult Create(TicketViewModel ticket)
         {
             if (ModelState.IsValid)
             {
-                _db.Tickets.Add(ticket);
+                
+                //TODO: 02 - TicketViewModel should have owner:
+                ticket.OwnerId = User.Identity.GetUserId();
+                _db.Tickets.Add(ticket.ToTicket());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //TODO: Replace with ViewModel and UserManager
-            //ViewBag.AssignedAgentId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.OwnerId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -82,15 +84,13 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = _db.Tickets.Find(id);
+            TicketViewModel ticket = _db.Tickets.Find(id).ToTicketViewModel();
             if (ticket == null)
             {
                 return HttpNotFound();
             }
-            //TODO: Replace with ViewModel and UserManager
-            //ViewBag.AssignedAgentId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.OwnerId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -99,18 +99,17 @@ namespace Simple.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,TicketPriority,TicketState,ProductId,AgentReply,OwnerId,AssignedAgentId")] Ticket ticket)
+        public ActionResult Edit(TicketViewModel ticket)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(ticket).State = EntityState.Modified;
+                ticket.OwnerId = User.Identity.GetUserId();
+                _db.Entry(ticket.ToTicket()).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //TODO: Replace with ViewModel and UserManager
-            //ViewBag.AssignedAgentId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.OwnerId = new SelectList(_db.ApplicationUsers, "Id", "Email");
-            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //TODO: 01 Uncomment below line to allow for product choice during ticket creation
+            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -121,7 +120,7 @@ namespace Simple.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = _db.Tickets.Find(id);
+            TicketViewModel ticket = _db.Tickets.Find(id).ToTicketViewModel();
             if (ticket == null)
             {
                 return HttpNotFound();
