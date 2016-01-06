@@ -51,7 +51,7 @@ namespace Simple.Web.Controllers
         public ActionResult Create()
         {
             //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View();
         }
 
@@ -66,14 +66,14 @@ namespace Simple.Web.Controllers
             {
                 
                 //TODO: 02 - TicketViewModel should have owner:
-                ticket.OwnerId = User.Identity.GetUserId();
+                //ticket.OwnerId = User.Identity.GetUserId();
                 _db.Tickets.Add(ticket.ToTicket());
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -90,7 +90,7 @@ namespace Simple.Web.Controllers
                 return HttpNotFound();
             }
             //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
@@ -109,7 +109,7 @@ namespace Simple.Web.Controllers
                 return RedirectToAction("Index");
             }
             //TODO: 01 Uncomment below line to allow for product choice during ticket creation
-            ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
+            //ViewBag.ProductId = new SelectList(_db.Products, "Id", "Name");
             return View(ticket);
         }
 
