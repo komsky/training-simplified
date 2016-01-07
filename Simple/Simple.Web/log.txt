@@ -1,0 +1,7 @@
+2016-01-07 10:14:44.6145|DEBUG|Simple.Web.Controllers.HomeController|Error
+2016-01-07 10:14:44.6660|INFO|Simple.Web.Controllers.HomeController|Info from logger
+2016-01-07 10:19:24.8989|DEBUG|Simple.Web.Controllers.HomeController|Error
+2016-01-07 10:19:24.9399|INFO|Simple.Web.Controllers.HomeController|Info from logger
+2016-01-07 10:19:44.6782|DEBUG|Simple.Web.Controllers.HomeController|Error
+2016-01-07 10:20:51.9557|DEBUG|Simple.Web.Controllers.HomeController|Error
+2016-01-07 10:20:51.9557|INFO|Simple.Web.Controllers.HomeController|Info from logger

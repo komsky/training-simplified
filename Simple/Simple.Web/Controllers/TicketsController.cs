@@ -31,6 +31,17 @@ namespace Simple.Web.Controllers
             var tickets = _db.Tickets.Include(t => t.AssignedAgent).Include(t => t.Owner).Include(t => t.Product).Select(Mapper.DynamicMap<TicketViewModel>);
             return View(tickets);
         }
+        public virtual ActionResult Search(string id)
+        {
+            var tickets = _db.Tickets
+                .Include(t => t.AssignedAgent)
+                .Include(t => t.Owner).Include(t => t.Product)
+                .Where(x=>x.Title.Contains(id) 
+                    || x.Description.Contains(id)
+                    || x.AgentReply.Contains(id))
+                .Select(Mapper.DynamicMap<TicketViewModel>);
+            return View(MVC.Tickets.Views.Index, tickets);
+        }
 
         // GET: Tickets/Details/5
         public virtual ActionResult Details(int? id)

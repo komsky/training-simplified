@@ -79,6 +79,7 @@
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\SystemLog.cs" />
     <Compile Include="Entities\Ticket.cs" />
     <Compile Include="Enums\TicketState.cs" />
     <Compile Include="Context\Migrations\Configuration.cs" />
@@ -86,12 +87,19 @@
     <Compile Include="Migrations\201601051707534_InitialCreate.Designer.cs">
       <DependentUpon>201601051707534_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601070736591_SystemLog.cs" />
+    <Compile Include="Migrations\201601070736591_SystemLog.Designer.cs">
+      <DependentUpon>201601070736591_SystemLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enums\TicketPriority.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601051707534_InitialCreate.resx">
       <DependentUpon>201601051707534_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601070736591_SystemLog.resx">
+      <DependentUpon>201601070736591_SystemLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -12,9 +12,11 @@ namespace Simple.DAL.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, ISimpleDbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
+
+        public virtual DbSet<SystemLog> SystemLogs { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

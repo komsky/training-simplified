@@ -60,6 +60,9 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -203,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SystemLogsController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="CustomersController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -254,6 +258,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\init.js" />
@@ -325,6 +335,11 @@
     <Content Include="Views\Tickets\Index.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Tickets\_Ticket.cshtml" />
+    <Content Include="Views\SystemLogs\Create.cshtml" />
+    <Content Include="Views\SystemLogs\Delete.cshtml" />
+    <Content Include="Views\SystemLogs\Details.cshtml" />
+    <Content Include="Views\SystemLogs\Edit.cshtml" />
+    <Content Include="Views\SystemLogs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

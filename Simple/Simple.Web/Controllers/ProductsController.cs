@@ -29,7 +29,15 @@ namespace Simple.Web.Controllers
             return View(products);
         }
 
-        // GET: Products/Details/5
+        [Route("Products/Details/{id}/Tickets")]
+        public virtual ActionResult Tickets(int id)
+        {
+            var tickets = _db.Tickets.Where(x => x.ProductId == id)
+                .Select(TicketFactories.CreateTicketViewModel);
+            return View(MVC.Tickets.Views.Index, tickets);
+        }
+
+        [Route("Products/Details/{id}/Tickets")]
         public virtual ActionResult Details(int? id)
         {
             if (id == null)
